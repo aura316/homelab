@@ -1,0 +1,55 @@
+include:
+  - servarr/compose.yaml
+  - homarr/compose.yaml
+  - downloaders/compose.yaml
+  - jellyfin/compose.yaml
+  - traefik3/compose.yaml
+
+networks:
+  default:
+    driver: bridge
+  # Traefik needs its own network. Apps that want to enable Traefik must use the network
+  traefik-proxy:
+    name: traefik-proxy
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.90.0/24
+
+secrets:
+  oauth_secrets:
+    file: $DOCKER_SECRETS/oauth_secrets
+  cf_dns_api_token:
+    file: $DOCKER_SECRETS/cf_dns_api_token
+
+services:
+###
+# Code-server: Vscode on the server :3
+###
+  code-server:
+    image: lscr.io/linuxserver/code-server:latest
+    container_name: code-server
+    environment:
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=$TZ
+    volumes:
+      - $DOCKER_DIR/code-server/config:/config
+      - /home/$USERNAME:/$USERNAME
+    ports:
+      - 8443:8443
+    restart: unless-stopped
+
+###
+# Watchtower: Checks for docker image updates
+###
+  watchtower:
+    image: containrrr/watchtower
+    command:
+      - --cleanup=true
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+volumes:
+  code-server:
