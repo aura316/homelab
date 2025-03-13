@@ -35,6 +35,7 @@ echo "Don't forget:"
 echo " - to configure google's authentication at /docker/secrets/oauth_secrets!"
 echo "   - \"secret\" can be generated with: openssl rand -hex 16"
 echo " - to put the DNS API KEY in /docker/secrets/cf_dns_api_token"
+echo " - define a static ip in this machine"
 
 #### MEDIA SERVER DIRECTORY LAYOUT ####
 
