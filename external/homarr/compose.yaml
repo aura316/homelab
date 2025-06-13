@@ -1,6 +1,3 @@
-#---------------------------------------------------------------------#
-#     Homarr - A simple, yet powerful server dashboard.               #
-#---------------------------------------------------------------------#
 services:
   homarr:
     container_name: homarr

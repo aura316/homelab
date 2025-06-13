@@ -1,8 +1,7 @@
 include:
-  - servarr/compose.yaml
-  - homarr/compose.yaml
   - downloaders/compose.yaml
-  - jellyfin/compose.yaml
+  - external/compose.yaml
+  - servarr/compose.yaml
   - traefik3/compose.yaml
 
 networks:

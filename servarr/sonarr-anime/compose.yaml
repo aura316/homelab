@@ -1,0 +1,18 @@
+# Sonarr - Anime only instance
+services:
+  sonarr-anime:
+    container_name: sonarr-anime
+    image: ghcr.io/hotio/sonarr:latest
+    restart: unless-stopped
+    logging:
+      driver: json-file
+    ports:
+      - 8989:8989
+    environment:
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=$TZ
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - $DOCKER_DIR/sonarr-anime:/config
+      - $DATA_DIR:$DATA_DIR

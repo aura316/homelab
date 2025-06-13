@@ -12,7 +12,6 @@ popd () {
 }
 ###
 
-
 #### DOCKER CONFIG DIRS ####
 sudo mkdir -p /docker/secrets /docker/appdata
 ### Traefik
@@ -31,7 +30,7 @@ popd
 sudo cp -n ./traefik3/middleware-oauth.yml /docker/appdata/traefik3/rules/ # Google auth configuration
 sudo cp -n ./traefik3/oauth_secrets /docker/secrets/ # Google auth configuration
 
-echo "Don't forget:" 
+echo "Don't forget:"
 echo " - to configure google's authentication at /docker/secrets/oauth_secrets!"
 echo "   - \"secret\" can be generated with: openssl rand -hex 16"
 echo " - to put the DNS API KEY in /docker/secrets/cf_dns_api_token"

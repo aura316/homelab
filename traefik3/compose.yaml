@@ -27,7 +27,7 @@ services:
       - --certificatesResolvers.dns-cloudflare.acme.storage=/acme.json
       - --certificatesResolvers.dns-cloudflare.acme.dnsChallenge.provider=cloudflare
       - --certificatesResolvers.dns-cloudflare.acme.dnsChallenge.resolvers=1.1.1.1:53,1.0.0.1:53
-      - --certificatesResolvers.dns-cloudflare.acme.dnsChallenge.delayBeforeCheck=90 # To delay DNS check and reduce Let's Encrypt hitrate
+      - --certificatesResolvers.dns-cloudflare.acme.dnsChallenge.delayBeforeChecks=90 # To delay DNS check and reduce Let's Encrypt hitrate
     ports:
       - 80:80
       - 443:443
@@ -37,7 +37,7 @@ services:
       - $DOCKER_DIR/traefik3/acme/acme.json:/acme.json # Certificates file
     environment:
       - TZ=$TZ
-      - CF_DNS_API_TOKEN_FILE=/run/secrets/cf_dns_api_token   # Docker places secrets in /run/secrets 
+      - CF_DNS_API_TOKEN_FILE=/run/secrets/cf_dns_api_token   # Docker places secrets in /run/secrets
       - DOMAIN_NAME # Passing domain name to traefik
     secrets:
       - cf_dns_api_token

@@ -1,0 +1,17 @@
+services:
+  bazarr:
+    container_name: bazarr
+    image: ghcr.io/hotio/bazarr:latest
+    restart: unless-stopped
+    logging:
+      driver: json-file
+    ports:
+      - 6768:6767
+    environment:
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=$TZ
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - $DOCKER_DIR/bazarr:/config
+      - $MEDIA_DIR:$MEDIA_DIR

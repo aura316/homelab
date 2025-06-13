@@ -1,0 +1,4 @@
+include:
+  - homarr/compose.yaml
+  - jellyfin/compose.yaml
+  - jellyseerr/compose.yaml

@@ -1,0 +1,17 @@
+services:
+  radarr:
+    container_name: radarr
+    image: ghcr.io/hotio/radarr:latest
+    restart: unless-stopped
+    logging:
+      driver: json-file
+    ports:
+      - 7878:7878
+    environment:
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=$TZ
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - $DOCKER_DIR/radarr:/config
+      - $DATA_DIR:$DATA_DIR
