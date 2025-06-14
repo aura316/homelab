@@ -9,20 +9,23 @@ services:
       - $MEDIA_DIR/anime:$MEDIA_DIR/anime
       - $MEDIA_DIR/movies:$MEDIA_DIR/movies
       - $MEDIA_DIR/tvshows:$MEDIA_DIR/tvshows
+      - /dev/shm:/data/transcode # Offload transcoding to RAM if there's enough RAM
     restart: 'unless-stopped'
     networks:
       - traefik-proxy
+    devices:
+      - /dev/dri:/dev/dri # Graphic's hardware for transcoding
     ports:
       - 8096:8096
-      - 8920:8920 #optional
-      - 7359:7359/udp #optional
-      - 1900:1900/udp #optional
+      # - 8920:8920 #optional
+      # - 7359:7359/udp #optional
+      # - 1900:1900/udp #optional
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.jellyfin-rtr.entrypoints=websecure"
       - "traefik.http.routers.jellyfin-rtr.rule=Host(`jellyfin.$DOMAIN_NAME`)"
-      # Middlewares
-      # - "traefik.http.routers.jellyfin-rtr.middlewares=middleware-oauth@file"
+      # Middlewares (Disabled for now since jellyfin needs a login)
+      - "traefik.http.routers.jellyfin-rtr.middlewares=middleware-oauth@file"
       # Service
       - "traefik.http.routers.jellyfin-rtr.service=jellyfin-svc"
       - "traefik.http.services.jellyfin-svc.loadbalancer.server.port=8096"

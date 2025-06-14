@@ -7,8 +7,7 @@ include:
 networks:
   default:
     driver: bridge
-  # Traefik needs its own network. Apps that want to enable Traefik must use the network
-  traefik-proxy:
+  traefik-proxy: # Traefik needs its own network. Apps that want to enable Traefik must use the network
     name: traefik-proxy
     driver: bridge
     ipam:
@@ -22,33 +21,10 @@ secrets:
     file: $DOCKER_SECRETS/cf_dns_api_token
 
 services:
-###
-# Code-server: Vscode on the server :3
-###
-  code-server:
-    image: lscr.io/linuxserver/code-server:latest
-    container_name: code-server
-    environment:
-      - PUID=$PUID
-      - PGID=$PGID
-      - TZ=$TZ
-    volumes:
-      - $DOCKER_DIR/code-server/config:/config
-      - /home/$USERNAME:/$USERNAME
-    ports:
-      - 8443:8443
-    restart: unless-stopped
-
-###
-# Watchtower: Checks for docker image updates
-###
-  watchtower:
+  watchtower: # Keeps containers updated
     image: containrrr/watchtower
     command:
       - --cleanup=true
     restart: always
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-
-volumes:
-  code-server:

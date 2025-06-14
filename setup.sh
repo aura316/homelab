@@ -30,12 +30,6 @@ popd
 sudo cp -n ./traefik3/middleware-oauth.yml /docker/appdata/traefik3/rules/ # Google auth configuration
 sudo cp -n ./traefik3/oauth_secrets /docker/secrets/ # Google auth configuration
 
-echo "Don't forget:"
-echo " - to configure google's authentication at /docker/secrets/oauth_secrets!"
-echo "   - \"secret\" can be generated with: openssl rand -hex 16"
-echo " - to put the DNS API KEY in /docker/secrets/cf_dns_api_token"
-echo " - define a static ip in this machine"
-
 #### MEDIA SERVER DIRECTORY LAYOUT ####
 
 ### TORRENT DIRS SETUP ###
@@ -69,3 +63,9 @@ sudo chmod 600 /docker/appdata/traefik3/acme/acme.json
 
 echo ""
 echo "Done!"
+echo ""
+echo "Don't forget:"
+echo " - to configure google's authentication at /docker/secrets/oauth_secrets!"
+echo "   - \"secret\" can be generated with: openssl rand -hex 16"
+echo " - to put the DNS API KEY in /docker/secrets/cf_dns_api_token"
+echo " - define a static ip in this machine"

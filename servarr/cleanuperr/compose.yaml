@@ -1,0 +1,95 @@
+# https://flmorg.github.io/cleanuperr/docs/configuration/examples/docker/
+# This is essentially the default settings
+services:
+  cleanuperr:
+    image: ghcr.io/flmorg/cleanuperr:latest
+    restart: unless-stopped
+    volumes:
+      - $TORRENT_DIR:$TORRENT_DIR
+    environment:
+      - TZ=$TZ
+      - SEARCH_ENABLED=false # Searching is handled by huntarr
+
+      - TRIGGERS__QUEUECLEANER=0 0/5 * * * ? # Cron job that triggers every 5 mins
+      - QUEUECLEANER__ENABLED=true
+      # - QUEUECLEANER__IGNORED_DOWNLOADS_PATH=/ignored.txt
+      - QUEUECLEANER__RUNSEQUENTIALLY=true
+
+      - QUEUECLEANER__IMPORT_FAILED_MAX_STRIKES=5
+      # - QUEUECLEANER__IMPORT_FAILED_IGNORE_PATTERNS__0=title mismatch
+      # - QUEUECLEANER__IMPORT_FAILED_IGNORE_PATTERNS__1=manual import required
+
+      - QUEUECLEANER__STALLED_MAX_STRIKES=5
+      - QUEUECLEANER__STALLED_RESET_STRIKES_ON_PROGRESS=true
+      - QUEUECLEANER__DOWNLOADING_METADATA_MAX_STRIKES=5
+
+      - QUEUECLEANER__SLOW_MAX_STRIKES=5
+      - QUEUECLEANER__SLOW_RESET_STRIKES_ON_PROGRESS=true
+      - QUEUECLEANER__SLOW_MIN_SPEED=1MB
+      - QUEUECLEANER__SLOW_MAX_TIME=20
+      - QUEUECLEANER__SLOW_IGNORE_ABOVE_SIZE=60GB
+
+      - TRIGGERS__CONTENTBLOCKER=0 0/5 * * * ?
+      - CONTENTBLOCKER__ENABLED=true
+      # - CONTENTBLOCKER__IGNORED_DOWNLOADS_PATH=/ignored.txt
+
+
+      - DOWNLOAD_CLIENT=qBittorrent
+      - QBITTORRENT__URL=http://qbittorrent:8090 # Since the default network is set to bridget, docker compose allows to talk directly to qbittorrent
+      - QBITTORRENT__USERNAME=$QBIT_USER
+      - QBITTORRENT__PASSWORD=$QBIT_PW
+
+
+      - TRIGGERS__DOWNLOADCLEANER=0 0 * * * ?
+      - DOWNLOADCLEANER__ENABLED=true
+      # - DOWNLOADCLEANER__IGNORED_DOWNLOADS_PATH=/ignored.txt
+
+      # These categories must match the categories set in the qbittorrent, which are set by each *arr app in their settings
+      - DOWNLOADCLEANER__CATEGORIES__0__NAME=anime
+      - DOWNLOADCLEANER__CATEGORIES__0__MAX_RATIO=1
+      - DOWNLOADCLEANER__CATEGORIES__0__MIN_SEED_TIME=0
+      - DOWNLOADCLEANER__CATEGORIES__0__MAX_SEED_TIME=240
+
+      - DOWNLOADCLEANER__CATEGORIES__1__NAME=tvshows
+      - DOWNLOADCLEANER__CATEGORIES__1__MAX_RATIO=1
+      - DOWNLOADCLEANER__CATEGORIES__1__MIN_SEED_TIME=0
+      - DOWNLOADCLEANER__CATEGORIES__1__MAX_SEED_TIME=240
+
+      - DOWNLOADCLEANER__CATEGORIES__2__NAME=movies
+      - DOWNLOADCLEANER__CATEGORIES__2__MAX_RATIO=1
+      - DOWNLOADCLEANER__CATEGORIES__2__MIN_SEED_TIME=0
+      - DOWNLOADCLEANER__CATEGORIES__2__MAX_SEED_TIME=240
+
+      - DOWNLOADCLEANER__CATEGORIES__3__NAME=cleanuperr-unlinked
+      - DOWNLOADCLEANER__CATEGORIES__3__MAX_RATIO=1
+      - DOWNLOADCLEANER__CATEGORIES__3__MIN_SEED_TIME=0
+      - DOWNLOADCLEANER__CATEGORIES__3__MAX_SEED_TIME=240
+
+      - DOWNLOADCLEANER__UNLINKED_TARGET_CATEGORY=cleanuperr-unlinked
+      - DOWNLOADCLEANER__UNLINKED_IGNORED_ROOT_DIR=/data/torrents # download location that must be shared with the download client
+      - DOWNLOADCLEANER__UNLINKED_CATEGORIES__0=anime
+      - DOWNLOADCLEANER__UNLINKED_CATEGORIES__1=tvshows
+      - DOWNLOADCLEANER__UNLINKED_CATEGORIES__2=movies
+
+
+      - SONARR__ENABLED=true
+      - SONARR__SEARCHTYPE=Episode
+      # - SONARR__BLOCK__PATH=/sonarr_blocklist.json # Probably needs to be mapped to a host volume
+      - SONARR__INSTANCES__0__URL=http://sonarr-anime:8989
+      - SONARR__INSTANCES__0__APIKEY=$SONARR_ANIME_API_KEY
+      - SONARR__INSTANCES__1__URL=http://sonarr-tvshows:8989
+      - SONARR__INSTANCES__1__APIKEY=$SONARR_TV_API_KEY
+
+      - RADARR__ENABLED=true
+      # - RADARR__BLOCK__PATH=/radarr_blocklist.json # Probably needs to be mapped to a host volume
+      - RADARR__INSTANCES__0__URL=http://radarr:7878
+      - RADARR__INSTANCES__0__APIKEY=$RADARR_API_KEY
+
+      # - NOTIFIARR__ON_IMPORT_FAILED_STRIKE=true
+      # - NOTIFIARR__ON_STALLED_STRIKE=true
+      # - NOTIFIARR__ON_SLOW_STRIKE=true
+      # - NOTIFIARR__ON_QUEUE_ITEM_DELETED=true
+      # - NOTIFIARR__ON_DOWNLOAD_CLEANED=true
+      # - NOTIFIARR__ON_CATEGORY_CHANGED=true
+      # - NOTIFIARR__API_KEY=notifiarrSecret
+      # - NOTIFIARR__CHANNEL_ID=discordChannelId

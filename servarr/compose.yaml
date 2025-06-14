@@ -1,5 +1,7 @@
 include:
   - bazarr/compose.yaml
+  - cleanuperr/compose.yaml
+  - huntarr/compose.yaml
   - prowlarr/compose.yaml
   - radarr/compose.yaml
   - sonarr-anime/compose.yaml
