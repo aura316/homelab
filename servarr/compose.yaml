@@ -1,6 +1,6 @@
 include:
   - bazarr/compose.yaml
-  - cleanuperr/compose.yaml
+  - cleanuparr/compose.yaml
   - huntarr/compose.yaml
   - prowlarr/compose.yaml
   - radarr/compose.yaml
