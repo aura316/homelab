@@ -1,0 +1,28 @@
+# https://docs.stirlingpdf.com/Installation/Docker%20Install
+services:
+  stirling-pdf:
+    image: docker.stirlingpdf.com/stirlingtools/stirling-pdf:latest-ultra-lite
+    container_name: stirling-pdf
+    environment:
+      - DISABLE_ADDITIONAL_FEATURES=true # Disables some stuff like logins and all that
+      - LANGS=en_US
+    ports:
+      - '8080:8080'
+    volumes:
+      - $DOCKER_DIR/stirlingpdf/trainingData:/usr/share/tessdata # Required for extra OCR languages
+      - $DOCKER_DIR/stirlingpdf/extraConfigs:/configs
+      - $DOCKER_DIR/stirlingpdf/customFiles:/customFiles/
+      - $DOCKER_DIR/stirlingpdf/logs:/logs/
+      - $DOCKER_DIR/stirlingpdf/pipeline:/pipeline/
+    restart: unless-stopped
+    networks:
+      - traefik-proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.stirling-pdf-rtr.entrypoints=websecure"
+      - "traefik.http.routers.stirling-pdf-rtr.rule=Host(`stirling.$DOMAIN_NAME`)"
+      # Middlewares
+      - "traefik.http.routers.stirling-pdf-rtr.middlewares=middleware-oauth@file"
+      # Service
+      - "traefik.http.routers.stirling-pdf-rtr.service=stirling-pdf-svc"
+      - "traefik.http.services.stirling-pdf-svc.loadbalancer.server.port=8080"
