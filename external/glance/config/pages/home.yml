@@ -1,0 +1,103 @@
+- name: Home
+  # Optionally, if you only have a single page you can hide the desktop navigation for a cleaner look
+  # hide-desktop-navigation: true
+  columns:
+    - size: small
+      widgets:
+        - type: clock
+          hour-format: 24h
+          timezone: ${TZ}
+        - type: weather
+          location: ${LOCATION}
+          units: metric
+          hour-format: 24h
+        - type: calendar
+          first-day-of-week: sunday
+        - type: twitch-channels
+          channels:
+            - hasanabi
+            - otzdarva
+            - johnny_health
+            - mbtyugioh
+            - deathydl
+
+    - size: full
+      widgets:
+        - type: server-stats
+          servers:
+            - type: remote
+              name: Main server
+              url: http://${HOSTNAME}:27973/
+        - type: to-do
+        - type: group
+          widgets:
+            - type: monitor
+              cache: 1m
+              title: External Services
+              sites:
+                - title: Jellyfin
+                  url: https://jellyfin.${DOMAIN_NAME}/
+                  icon: di:jellyfin
+                - title: Jellyseerr
+                  url: https://jellyseerr.${DOMAIN_NAME}/
+                  icon: di:jellyseerr
+                - title: Traefik
+                  url: https://traefik.${DOMAIN_NAME}/
+                  icon: di:traefik
+                - title: Stirling PDF
+                  url: https://stirling.${DOMAIN_NAME}/
+                  icon: di:stirling-pdf
+            - type: monitor
+              cache: 1m
+              title: Internal Services
+              sites:
+                - title: Jellyfin
+                  url: http://${HOSTNAME}:8096/
+                  icon: di:jellyfin
+                - title: Jellyseerr
+                  url: http://${HOSTNAME}:5055/
+                  icon: di:jellyseerr
+                - title: qBittorrent
+                  url: http://${HOSTNAME}:8090/
+                  icon: di:qbittorrent
+                - title: Radarr - Anime
+                  url: http://${HOSTNAME}:7879/
+                  icon: di:radarr
+                - title: Sonarr - Anime
+                  url: http://${HOSTNAME}:8989/
+                  icon: di:sonarr                
+                - title: Radarr
+                  url: http://${HOSTNAME}:7878/
+                  icon: di:radarr
+                - title: Sonarr - TV
+                  url: http://${HOSTNAME}:8990/
+                  icon: di:sonarr
+                - title: Prowlarr
+                  url: http://${HOSTNAME}:9696/
+                  icon: di:prowlarr
+                - title: Bazarr
+                  url: http://${HOSTNAME}:6767/
+                  icon: di:bazarr
+                - title: Huntarr
+                  url: http://${HOSTNAME}:9705/
+                  icon: di:huntarr.png
+                - title: Cleanuparr
+                  url: http://${HOSTNAME}:11011/
+                  icon: di:cleanuperr
+                - title: WebConsole
+                  url: http://${HOSTNAME}:9090/
+                  icon: di:fedora
+                - title: Stirling PDF
+                  url: http://${HOSTNAME}:8181/
+                  icon: di:stirling-pdf
+                - title: Homarr
+                  url: http://${HOSTNAME}:7575/
+                  icon: di:homarr
+            - type: docker-containers
+              hide-by-default: false
+
+    - size: small
+      widgets:
+        - $include: custom-apis/jellyseerr-requests.yml
+        - $include: custom-apis/steam-discounts.yml
+        - $include: custom-apis/epic-free-games.yml

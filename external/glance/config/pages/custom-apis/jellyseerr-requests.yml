@@ -1,0 +1,21 @@
+- type: custom-api
+  title: Jellyseerr requests
+  url: http://${HOSTNAME}:5055/api/v1/request/count
+  headers:
+    x-api-key: ${JELLYSEERR_API_KEY}
+    Accept: application/json
+  template: |
+    <div class="flex justify-between text-center">
+      <div>
+        <div class="color-highlight size-h4">{{ .JSON.Int "pending"  }}</div>
+        <div class="size-h6">PENDING</div>
+      </div>
+      <div>
+        <div class="color-highlight size-h4">{{ .JSON.Int "processing" }}</div>
+        <div class="size-h6">PROCESSING</div>
+      </div>
+      <div>
+        <div class="color-highlight size-h4">{{ .JSON.Int "approved" }}</div>
+        <div class="size-h6">APPROVED</div>
+      </div>
+    </div>

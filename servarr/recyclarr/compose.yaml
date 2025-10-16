@@ -1,0 +1,27 @@
+services:
+  recyclarr:
+    # Connection via default bridge network
+    container_name: recyclarr
+    image: ghcr.io/recyclarr/recyclarr
+    user: $PUID:$PGID
+    volumes:
+      # Docker creates folders as root which is really annoying
+      - ./configs/:/config/configs
+      - $DOCKER_DIR/recyclarr:/config
+    # URLs defined from hostname, still must respect the exposed docker ports from the services
+    environment:
+      - TZ=$TZ
+      - CRON_SCHEDULE=@daily
+      - RECYCLARR_CREATE_CONFIG=true
+      # ARR integration settings
+      - ANIME_RADARR_URL=http://$HOSTNAME:7879
+      - ANIME_RADARR_API=$ANIME_RADARR_API
+
+      - ANIME_SONARR_URL=http://$HOSTNAME:8989
+      - ANIME_SONARR_API=$ANIME_SONARR_API
+
+      - TV_RADARR_URL=http://$HOSTNAME:7878
+      - TV_RADARR_API=$TV_RADARR_API
+
+      - TV_SONARR_URL=http://$HOSTNAME:8990
+      - TV_SONARR_API=$TV_SONARR_API

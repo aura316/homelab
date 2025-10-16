@@ -1,0 +1,17 @@
+services:
+  radarr-anime:
+    container_name: radarr-anime
+    image: ghcr.io/hotio/radarr:latest
+    restart: unless-stopped
+    logging:
+      driver: json-file
+    ports:
+      - 7879:7878
+    environment:
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=$TZ
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - $DOCKER_DIR/radarr-anime:/config
+      - $DATA_DIR:$DATA_DIR

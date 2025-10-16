@@ -7,7 +7,7 @@ services:
       - DISABLE_ADDITIONAL_FEATURES=true # Disables some stuff like logins and all that
       - LANGS=en_US
     ports:
-      - '8080:8080'
+      - '8181:8080'
     volumes:
       - $DOCKER_DIR/stirlingpdf/trainingData:/usr/share/tessdata # Required for extra OCR languages
       - $DOCKER_DIR/stirlingpdf/extraConfigs:/configs

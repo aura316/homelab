@@ -12,12 +12,4 @@ services:
       - traefik-proxy
     environment:
       - SECRET_ENCRYPTION_KEY=$SECRET_ENCRYPTION_KEY
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.homarr-rtr.entrypoints=websecure"
-      - "traefik.http.routers.homarr-rtr.rule=Host(`$DOMAIN_NAME`) || Host(`www.$DOMAIN_NAME`)"
-      # Middlewares
-      - "traefik.http.routers.homarr-rtr.middlewares=middleware-oauth@file"
-      # Service
-      - "traefik.http.routers.homarr-rtr.service=homarr-svc"
-      - "traefik.http.services.homarr-svc.loadbalancer.server.port=7575"
+

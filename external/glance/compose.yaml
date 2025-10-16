@@ -1,0 +1,38 @@
+services:
+  glance:
+    container_name: glance
+    image: glanceapp/glance
+    restart: unless-stopped
+    volumes:
+      # Optionally, also mount docker socket if you want to use the docker containers widget
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./config:/app/config
+      # - ./assets:/app/assets # Assets for custom CSS
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - 8080:8080
+    environment:
+      - TZ=$TZ
+      - HOSTNAME=$HOSTNAME
+      - JELLYSEERR_API_KEY=$JELLYSEERR_API_KEY
+      - LOCATION=$LOCATION
+      - DOMAIN_NAME=$DOMAIN_NAME
+    labels:
+      traefik.enable: true
+      traefik.http.routers.glance-rtr.entrypoints: websecure
+      traefik.http.routers.glance-rtr.rule: Host(`$DOMAIN_NAME`) || Host(`www.$DOMAIN_NAME`)
+      # Middlewares
+      traefik.http.routers.glance-rtr.middlewares: middleware-oauth@file
+      # Service
+      traefik.http.routers.glance-rtr.service: glance-svc
+      traefik.http.services.glance-svc.loadbalancer.server.port: 8080
+
+
+  glance-agent:
+    container_name: glance-agent
+    image: glanceapp/agent
+    volumes:
+      # Add your mount points below in the format host_path:container_path with :ro suffix for read-only
+      - /storage:/storage:ro
+    ports:
+      - 27973:27973
