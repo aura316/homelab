@@ -3,6 +3,8 @@ services:
     container_name: glance
     image: glanceapp/glance
     restart: unless-stopped
+    networks:
+      - traefik-proxy
     volumes:
       # Optionally, also mount docker socket if you want to use the docker containers widget
       - /var/run/docker.sock:/var/run/docker.sock:ro

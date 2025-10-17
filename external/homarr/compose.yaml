@@ -12,4 +12,4 @@ services:
       - traefik-proxy
     environment:
       - SECRET_ENCRYPTION_KEY=$SECRET_ENCRYPTION_KEY
-
+      
