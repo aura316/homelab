@@ -29,7 +29,7 @@ services:
       traefik.http.routers.glance-rtr.service: glance-svc
       traefik.http.services.glance-svc.loadbalancer.server.port: 8080
 
-
+  # Glance agent for resource monitoring
   glance-agent:
     container_name: glance-agent
     image: glanceapp/agent

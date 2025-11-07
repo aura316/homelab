@@ -2,7 +2,7 @@ http:
   middlewares:
     middleware-oauth:
       forwardAuth:
-        address: "http://oauth:4181" # Make sure you have the OAuth service in docker-compose.yml
+        address: "http://oauth:4181" # Requires OAuth service running
         trustForwardHeader: true
         authResponseHeaders:
           - "X-Forwarded-User"

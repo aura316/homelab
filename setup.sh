@@ -28,7 +28,7 @@ popd
 
 ### NOTE the rules folder must be correctly mapped to the traefik /rules, in case you change that directory
 sudo cp -n ./traefik3/middleware-oauth.yml /docker/appdata/traefik3/rules/ # Google auth configuration
-sudo cp -n ./traefik3/oauth_secrets /docker/secrets/ # Google auth configuration
+sudo cp -n ./traefik3/oauth_secrets.example /docker/secrets/oauth_secrets # Google auth configuration
 
 #### MEDIA SERVER DIRECTORY LAYOUT ####
 

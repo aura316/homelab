@@ -1,3 +1,4 @@
+# Homarr has some integrations that break with OAuth, like jellyfin
 services:
   homarr:
     container_name: homarr

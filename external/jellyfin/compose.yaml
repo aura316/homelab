@@ -25,8 +25,7 @@ services:
       - "traefik.http.routers.jellyfin-rtr.entrypoints=websecure"
       - "traefik.http.routers.jellyfin-rtr.rule=Host(`jellyfin.$DOMAIN_NAME`)"
       # Middlewares
-      # Some integrations with homarr break via oauth
-      # - "traefik.http.routers.jellyfin-rtr.middlewares=middleware-oauth@file"
+      - "traefik.http.routers.jellyfin-rtr.middlewares=middleware-oauth@file"
       # Service
       - "traefik.http.routers.jellyfin-rtr.service=jellyfin-svc"
       - "traefik.http.services.jellyfin-svc.loadbalancer.server.port=8096"
