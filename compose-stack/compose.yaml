@@ -1,30 +1,32 @@
 include:
-  - downloaders/compose.yaml
-  - external/compose.yaml
-  - servarr/compose.yaml
-  - traefik3/compose.yaml
+  # - arr_stack/compose.yaml
+  # - downloaders/compose.yaml
+  - security/compose.yaml
+  # - web/compose.yaml
 
 networks:
   default:
     driver: bridge
-  traefik-proxy: # Traefik needs its own network. Apps that want to enable Traefik must use the network
+  # Traefik needs its own network. Apps that want to enable Traefik must use the network
+  traefik-proxy:
     name: traefik-proxy
     driver: bridge
     ipam:
       config:
-        - subnet: 192.168.90.0/24
+        - subnet: 192.168.90.0/24 # This can't be the same as the LAN subnet. Only used internally by docker
+  authelia:
+    name: authelia
 
 secrets:
   oauth_secrets:
     file: $DOCKER_SECRETS/oauth_secrets
   cf_dns_api_token:
     file: $DOCKER_SECRETS/cf_dns_api_token
-
-services:
-  watchtower: # Keeps containers updated
-    image: containrrr/watchtower
-    command:
-      - --cleanup=true
-    restart: always
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+# services:
+#   watchtower: # Keeps containers updated
+#     image: containrrr/watchtower
+#     command:
+#       - --cleanup=true
+#     restart: always
+#     volumes:
+#       - /var/run/docker.sock:/var/run/docker.sock

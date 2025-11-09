@@ -1,0 +1,82 @@
+---
+- name: Create docker directories
+  ansible.builtin.file:
+    path: /docker/{{ item }}
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    state: directory
+  loop:
+    - secrets
+    - appdata
+
+
+- name: Create traefik directories
+  ansible.builtin.file:
+    path: /docker/appdata/traefik3/{{ item }}
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    state: directory
+  loop:
+    - acme
+    - rules
+
+- name: Create secrets files
+  ansible.builtin.file:
+    path: /docker/secrets/{{ item }}
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    state: touch
+    access_time: preserve
+    modification_time: preserve
+    mode: "0600"
+  loop:
+    - cf_dns_api_token
+    - jwt_secret.txt
+    - storage_encryption_key.txt
+    - session_secret.txt
+
+- name: Create Traefik's certificate file
+  ansible.builtin.file:
+    path: /docker/appdata/traefik3/acme/acme.json
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "0600"
+    state: touch
+    access_time: preserve
+    modification_time: preserve
+
+- name: Create torrent directories
+  ansible.builtin.file:
+    path: /data/torrents/{{ item }}
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    state: directory
+  loop:
+    - anime
+    - tvshows
+    - movies
+    - prowlarr
+
+- name: Create usenet directories
+  ansible.builtin.file:
+    path: /data/usenet/complete/{{ item }}
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    state: directory
+  loop:
+    - anime
+    - tvshows
+    - movies
+    - prowlarr
+
+- name: Create media directories
+  ansible.builtin.file:
+    path: /data/media/{{ item }}
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    state: directory
+  loop:
+    - anime
+    - tvshows
+    - movies
+    - prowlarr

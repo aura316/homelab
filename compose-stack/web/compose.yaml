@@ -1,6 +1,5 @@
 include:
   - glance/compose.yaml
-  # - homarr/compose.yaml
   - jellyfin/compose.yaml
   - jellyseerr/compose.yaml
   - stirlingpdf/compose.yaml

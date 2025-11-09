@@ -23,7 +23,7 @@ services:
       - --entrypoints.websecure.http.tls.domains[0].main=$DOMAIN_NAME
       - --entrypoints.websecure.http.tls.domains[0].sans=*.$DOMAIN_NAME
       ### Cert resolver needs to match the certresolver declared in the entrypoints
-      #- --certificatesResolvers.dns-cloudflare.acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory # LetsEncrypt Staging Server - uncomment when testing
+      - --certificatesResolvers.dns-cloudflare.acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory # LetsEncrypt Staging Server - uncomment when testing
       - --certificatesResolvers.dns-cloudflare.acme.storage=/acme.json
       - --certificatesResolvers.dns-cloudflare.acme.dnsChallenge.provider=cloudflare
       - --certificatesResolvers.dns-cloudflare.acme.dnsChallenge.resolvers=1.1.1.1:53,1.0.0.1:53
@@ -37,25 +37,25 @@ services:
       - $DOCKER_DIR/traefik3/acme/acme.json:/acme.json # Certificates file
     environment:
       - TZ=$TZ
-      - CF_DNS_API_TOKEN_FILE=/run/secrets/cf_dns_api_token   # Docker places secrets in /run/secrets
+      - CF_DNS_API_TOKEN_FILE=/run/secrets/cf_dns_api_token # Docker places secrets in /run/secrets
       - DOMAIN_NAME # Passing domain name to traefik
     secrets:
       - cf_dns_api_token
-###
-# These labels enable the traefik dashboard, every docker service we want to expose will need something similar.
-# Note: Traefik is written in GO so we should use GO syntax, like backticks for strings
-###
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.traefik-rtr.entrypoints=websecure"
-      - "traefik.http.routers.traefik-rtr.rule=Host(`traefik.$DOMAIN_NAME`)" # Traefik dashboard will be at traefik.domain
-      - "traefik.http.routers.traefik-rtr.service=api@internal" # This value is a special traefik keyword that allows it to listen to itself. Other services need the actual port number.
-      - "traefik.http.routers.traefik-rtr.middlewares=middleware-oauth@file" # Need google auth to access.
+    ###
+    # These labels enable the traefik dashboard, every docker service we want to expose will need something similar.
+    # Note: Traefik is written in GO so we should use GO syntax, like backticks for strings
+    ###
+    # labels:
+    #   - "traefik.enable=true"
+    #   - "traefik.http.routers.traefik-rtr.entrypoints=websecure"
+    #   - "traefik.http.routers.traefik-rtr.rule=Host(`traefik.$DOMAIN_NAME`)" # Traefik dashboard will be at traefik.domain
+    #   - "traefik.http.routers.traefik-rtr.service=api@internal" # This value is a special traefik keyword that allows it to listen to itself. Other services need the actual port number.
+    #   - "traefik.http.routers.traefik-rtr.middlewares=middleware-oauth@file" # Need google auth to access.
 
-###
-# Google OAuth - Single Sign On using OAuth 2.0
-# https://www.smarthomebeginner.com/google-oauth-with-traefik-docker/
-###
+  ###
+  # Google OAuth - Single Sign On using OAuth 2.0
+  # https://www.smarthomebeginner.com/google-oauth-with-traefik-docker/
+  ###
   oauth:
     container_name: oauth
     image: thomseddon/traefik-forward-auth:latest
@@ -87,3 +87,14 @@ services:
       # HTTP Services
       - "traefik.http.routers.oauth-rtr.service=oauth-svc"
       - "traefik.http.services.oauth-svc.loadbalancer.server.port=4181"
+
+  whoami-unsecure:
+    image: "traefik/whoami"
+    restart: "unless-stopped"
+    container_name: "whoami-unsecure"
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.whoami.rule: "Host(`whoami.$DOMAIN_NAME`)"
+      traefik.http.routers.whoami.entrypoints: websecure
+    networks:
+      proxy: {}

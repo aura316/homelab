@@ -1,3 +1,3 @@
 include:
-  - qbittorrent/compose.yaml
   # - nzbget/compose.yaml
+  - qbittorrent/compose.yaml
