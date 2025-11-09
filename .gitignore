@@ -6,3 +6,7 @@ servarr/recyclarr/config/cache/
 servarr/recyclarr/config/logs/
 servarr/recyclarr/config/repositories/
 servarr/recyclarr/config/includes/
+
+# VSCode files
+.vscode/
+.ansible/

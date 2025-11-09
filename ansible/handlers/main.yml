@@ -1,0 +1,7 @@
+---
+- name: apt update
+  ansible.builtin.apt:
+    update_cache: yes
+
+- name: reset connection
+  ansible.builtin.meta: reset_connection

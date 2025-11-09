@@ -1,0 +1,2 @@
+# Default user
+user: { name: aura, comment: Aura, uid: 1000 }

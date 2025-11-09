@@ -1,0 +1,12 @@
+- name: Configure homelab
+  hosts: homelab
+  handlers:
+    - import_tasks: handlers/main.yml
+  vars_files:
+    - vars/main.yml
+  become: true
+  roles:
+    - packages
+    - users
+    - firewall
+    - docker

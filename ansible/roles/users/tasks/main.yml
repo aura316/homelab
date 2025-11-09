@@ -1,0 +1,6 @@
+---
+- name: Create my user
+  ansible.builtin.user:
+    name: "{{ user.name }}"
+    comment: "{{ user.comment }}"
+    uid: "{{ user.uid }}"
