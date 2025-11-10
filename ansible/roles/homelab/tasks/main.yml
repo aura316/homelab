@@ -10,16 +10,23 @@
     - appdata
 
 
-- name: Create traefik directories
+- name: Create docker directories to avoid permission issues
   ansible.builtin.file:
-    path: /docker/appdata/traefik3/{{ item }}
+    path: /docker/appdata/{{ item }}
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
     state: directory
   loop:
-    - acme
-    - rules
-
+    - traefik3/acme
+    - traefik3/rules
+    - authelia/appdata
+    - authelia/logs
+    - jellyfin/config
+    - jellyfin/cache
+    - jellyseerr
+    - recyclarr
+    - huntarr
+    
 - name: Create secrets files
   ansible.builtin.file:
     path: /docker/secrets/{{ item }}

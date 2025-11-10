@@ -2,4 +2,4 @@ include:
   - glance/compose.yaml
   - jellyfin/compose.yaml
   - jellyseerr/compose.yaml
-  - stirlingpdf/compose.yaml
+  # - stirlingpdf/compose.yaml

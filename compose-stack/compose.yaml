@@ -1,9 +1,3 @@
-include:
-  # - arr_stack/compose.yaml
-  # - downloaders/compose.yaml
-  - security/compose.yaml
-  # - web/compose.yaml
-
 networks:
   default:
     driver: bridge
@@ -22,11 +16,18 @@ secrets:
     file: $DOCKER_SECRETS/oauth_secrets
   cf_dns_api_token:
     file: $DOCKER_SECRETS/cf_dns_api_token
-# services:
-#   watchtower: # Keeps containers updated
-#     image: containrrr/watchtower
-#     command:
-#       - --cleanup=true
-#     restart: always
-#     volumes:
-#       - /var/run/docker.sock:/var/run/docker.sock
+
+include:
+  - arr/compose.yaml
+  - downloaders/compose.yaml
+  - security/compose.yaml
+  - web/compose.yaml
+
+services:
+  watchtower: # Keeps containers updated
+    image: containrrr/watchtower
+    command:
+      - --cleanup=true
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock

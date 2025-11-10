@@ -4,6 +4,7 @@ services:
     container_name: "traefik"
     networks:
       - traefik-proxy
+      - authelia
     command:
       - --api.dashboard=true
       - --providers.docker=true
@@ -23,11 +24,12 @@ services:
       - --entrypoints.websecure.http.tls.domains[0].main=$DOMAIN_NAME
       - --entrypoints.websecure.http.tls.domains[0].sans=*.$DOMAIN_NAME
       ### Cert resolver needs to match the certresolver declared in the entrypoints
-      - --certificatesResolvers.dns-cloudflare.acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory # LetsEncrypt Staging Server - uncomment when testing
       - --certificatesResolvers.dns-cloudflare.acme.storage=/acme.json
       - --certificatesResolvers.dns-cloudflare.acme.dnsChallenge.provider=cloudflare
       - --certificatesResolvers.dns-cloudflare.acme.dnsChallenge.resolvers=1.1.1.1:53,1.0.0.1:53
       - --certificatesResolvers.dns-cloudflare.acme.dnsChallenge.delayBeforeCheck=90 # To delay DNS check and reduce Let's Encrypt hitrate
+      ### LetsEncrypt Staging Server - uncomment when testing
+      # - --certificatesResolvers.dns-cloudflare.acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory
     ports:
       - 80:80
       - 443:443
@@ -45,56 +47,9 @@ services:
     # These labels enable the traefik dashboard, every docker service we want to expose will need something similar.
     # Note: Traefik is written in GO so we should use GO syntax, like backticks for strings
     ###
-    # labels:
-    #   - "traefik.enable=true"
-    #   - "traefik.http.routers.traefik-rtr.entrypoints=websecure"
-    #   - "traefik.http.routers.traefik-rtr.rule=Host(`traefik.$DOMAIN_NAME`)" # Traefik dashboard will be at traefik.domain
-    #   - "traefik.http.routers.traefik-rtr.service=api@internal" # This value is a special traefik keyword that allows it to listen to itself. Other services need the actual port number.
-    #   - "traefik.http.routers.traefik-rtr.middlewares=middleware-oauth@file" # Need google auth to access.
-
-  ###
-  # Google OAuth - Single Sign On using OAuth 2.0
-  # https://www.smarthomebeginner.com/google-oauth-with-traefik-docker/
-  ###
-  oauth:
-    container_name: oauth
-    image: thomseddon/traefik-forward-auth:latest
-    restart: unless-stopped
-    networks:
-      - traefik-proxy
-    environment:
-      - CONFIG=/config
-      - COOKIE_DOMAIN=$DOMAIN_NAME
-      - INSECURE_COOKIE=false
-      - AUTH_HOST=oauth.$DOMAIN_NAME
-      - URL_PATH=/_oauth
-      - LOG_LEVEL=warn # set to trace while testing bypass rules
-      - LOG_FORMAT=text
-      - LIFETIME=86400 # 1 day
-      - DEFAULT_ACTION=auth
-      - DEFAULT_PROVIDER=google
-    secrets:
-      - source: oauth_secrets
-        target: /config
     labels:
       - "traefik.enable=true"
-      # HTTP Routers
-      - "traefik.http.routers.oauth-rtr.tls=true"
-      - "traefik.http.routers.oauth-rtr.entrypoints=websecure"
-      - "traefik.http.routers.oauth-rtr.rule=Host(`oauth.$DOMAIN_NAME`)"
-      # Middlewares
-      - "traefik.http.routers.oauth-rtr.middlewares=middleware-oauth@file"
-      # HTTP Services
-      - "traefik.http.routers.oauth-rtr.service=oauth-svc"
-      - "traefik.http.services.oauth-svc.loadbalancer.server.port=4181"
-
-  whoami-unsecure:
-    image: "traefik/whoami"
-    restart: "unless-stopped"
-    container_name: "whoami-unsecure"
-    labels:
-      traefik.enable: "true"
-      traefik.http.routers.whoami.rule: "Host(`whoami.$DOMAIN_NAME`)"
-      traefik.http.routers.whoami.entrypoints: websecure
-    networks:
-      proxy: {}
+      - "traefik.http.routers.traefik-rtr.entrypoints=websecure"
+      - "traefik.http.routers.traefik-rtr.rule=Host(`traefik.$DOMAIN_NAME`)" # Traefik dashboard will be at traefik.domain
+      - "traefik.http.routers.traefik-rtr.service=api@internal" # This value is a special traefik keyword that allows it to listen to itself. Other services need the actual port number.
+      - "traefik.http.routers.traefik-rtr.middlewares=authelia@docker"

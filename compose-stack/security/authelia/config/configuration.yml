@@ -2,11 +2,32 @@
 server:
   address: "tcp4://:9091"
 
+theme: dark
+
 # https://www.authelia.com/configuration/miscellaneous/logging/
 log:
   level: debug
-  file_path: "/var/log/authelia/authelia.log"
+  # file_path: "/var/log/authelia/authelia.log"
   keep_stdout: true
+
+# https://www.authelia.com/configuration/security/access-control/
+access_control:
+  default_policy: "deny"
+  rules:
+
+    - domain: 'traefik.{{ env "DOMAIN_NAME" }}'
+      policy: "two_factor"
+    - domain: 'glance.{{ env "DOMAIN_NAME" }}'
+      policy: "one_factor"
+    # Also links to glance
+    - domain: '{{ env "DOMAIN_NAME" }}'
+      policy: "one_factor"
+    - domain: 'jellyfin.{{ env "DOMAIN_NAME" }}'
+      policy: "one_factor"
+    - domain: 'jellyseerr.{{ env "DOMAIN_NAME" }}'
+      policy: "one_factor"
+    - domain: 'stirling.{{ env "DOMAIN_NAME" }}'
+      policy: "one_factor"
 
 # https://www.authelia.com/configuration/identity-validation/introduction/
 identity_validation:
@@ -19,7 +40,7 @@ identity_validation:
 # https://www.authelia.com/configuration/second-factor/time-based-one-time-password/
 totp:
   disable: false
-  issuer: "${DOMAIN_NAME}"
+  issuer: "authelia.com"
   period: 30
   skew: 1
 
@@ -32,7 +53,7 @@ password_policy:
 # https://www.authelia.com/configuration/first-factor/introduction/
 authentication_backend:
   file:
-    path: "/config/users.yml"
+    path: "/appdata/users.yml"
     password:
       algorithm: "argon2"
       argon2:
@@ -43,22 +64,13 @@ authentication_backend:
         key_length: 32
         salt_length: 16
 
-# https://www.authelia.com/configuration/security/access-control/
-access_control:
-  default_policy: "deny"
-  rules:
-    - domain: "traefik.${DOMAIN_NAME}"
-      policy: "one_factor"
-    - domain: "whoami-secure.${DOMAIN_NAME}"
-      policy: "two_factor"
-
 # https://www.authelia.com/configuration/session/introduction/
 session:
   name: "authelia_session"
   secret: {{ secret "/secrets/session_secret.txt" | mindent 0 "|" | msquote }}
   cookies:
-    - domain: "${DOMAIN_NAME}"
-      authelia_url: "https://auth.${DOMAIN_NAME}"
+    - domain: '{{ env "DOMAIN_NAME" }}'
+      authelia_url: 'https://auth.{{ env "DOMAIN_NAME" }}'
 
 # https://www.authelia.com/configuration/security/regulation/
 regulation:
@@ -70,10 +82,10 @@ regulation:
 storage:
   encryption_key: {{ secret "/secrets/storage_encryption_key.txt" | mindent 0 "|" | msquote }}
   local:
-    path: "/storage/db.sqlite3"
+    path: "/appdata/db.sqlite3"
 
 # https://www.authelia.com/configuration/notifications/introduction/
 notifier:
   disable_startup_check: false
   filesystem:
-    filename: "/notifications/notification.txt"
+    filename: "/appdata/notification.txt"

@@ -44,9 +44,9 @@
                 - title: Traefik
                   url: https://traefik.${DOMAIN_NAME}/
                   icon: di:traefik
-                - title: Stirling PDF
-                  url: https://stirling.${DOMAIN_NAME}/
-                  icon: di:stirling-pdf
+                # - title: Stirling PDF
+                #   url: https://stirling.${DOMAIN_NAME}/
+                #   icon: di:stirling-pdf
             - type: monitor
               cache: 1m
               title: Internal Services
@@ -65,7 +65,7 @@
                   icon: di:radarr
                 - title: Sonarr - Anime
                   url: http://${HOSTNAME}:8989/
-                  icon: di:sonarr                
+                  icon: di:sonarr
                 - title: Radarr
                   url: http://${HOSTNAME}:7878/
                   icon: di:radarr

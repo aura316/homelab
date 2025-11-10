@@ -24,7 +24,7 @@ services:
       traefik.http.routers.glance-rtr.entrypoints: websecure
       traefik.http.routers.glance-rtr.rule: Host(`$DOMAIN_NAME`) || Host(`www.$DOMAIN_NAME`)
       # Middlewares
-      traefik.http.routers.glance-rtr.middlewares: middleware-oauth@file
+      traefik.http.routers.glance-rtr.middlewares: authelia@docker
       # Service
       traefik.http.routers.glance-rtr.service: glance-svc
       traefik.http.services.glance-svc.loadbalancer.server.port: 8080
