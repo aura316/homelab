@@ -20,14 +20,15 @@ secrets:
 include:
   - arr/compose.yaml
   - downloaders/compose.yaml
+  - networking/compose.yaml
   - security/compose.yaml
   - web/compose.yaml
 
-services:
-  watchtower: # Keeps containers updated
-    image: containrrr/watchtower
-    command:
-      - --cleanup=true
-    restart: always
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+# services:
+#   watchtower: # Keeps containers updated
+#     image: containrrr/watchtower
+#     command:
+#       - --cleanup=true
+#     restart: always
+#     volumes:
+#       - /var/run/docker.sock:/var/run/docker.sock

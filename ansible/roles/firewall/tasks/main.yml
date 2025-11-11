@@ -13,11 +13,17 @@
     - name: Allow other ports
       community.general.ufw:
         rule: allow
-        proto: tcp
-        port: "{{ item }}"
+        proto: "{{item.proto}}"
+        port: "{{ item.port }}"
       loop:
-        - http
-        - https
+        - { proto: tcp, port: 80 }
+        - { proto: tcp, port: 443 }
+        - { proto: udp, port: 53 }
+        - { proto: tcp, port: 53 }
+        - { proto: udp, port: 67 }
+        - { proto: tcp, port: 67 }
+        - { proto: udp, port: 123 }
+        - { proto: udp, port: 546:547 }
 
 - name: Allow trafic from docker
   community.general.ufw:
