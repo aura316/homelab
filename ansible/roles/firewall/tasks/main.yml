@@ -7,11 +7,11 @@
 - name: Configure firewall
   block:
     - name: Allow OpenSSH
-      ufw:
+      community.general.ufw:
         rule: allow
         name: OpenSSH
     - name: Allow other ports
-      ufw:
+      community.general.ufw:
         rule: allow
         proto: tcp
         port: "{{ item }}"
@@ -19,6 +19,12 @@
         - http
         - https
 
+- name: Allow trafic from docker
+  community.general.ufw:
+    rule: allow
+    from: 172.17.0.0/16
+    proto: tcp
+
 - name: Enable UFW
-  ufw:
+  community.general.ufw:
     state: enabled
