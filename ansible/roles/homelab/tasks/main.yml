@@ -26,7 +26,7 @@
     - jellyseerr
     - recyclarr
     - huntarr
-    
+
 - name: Create secrets files
   ansible.builtin.file:
     path: /docker/secrets/{{ item }}
@@ -60,6 +60,7 @@
     state: directory
   loop:
     - anime
+    - anime-movies
     - tvshows
     - movies
     - prowlarr

@@ -1,6 +1,12 @@
 networks:
   default:
+    name: default_network
     driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+
+
   # Traefik needs its own network. Apps that want to enable Traefik must use the network
   traefik-proxy:
     name: traefik-proxy

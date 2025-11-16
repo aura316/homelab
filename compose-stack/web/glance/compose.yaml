@@ -15,10 +15,11 @@ services:
       - 8080:8080
     environment:
       - TZ=$TZ
-      - HOSTNAME=$HOSTNAME
+      - LOCAL_NAME=$LOCAL_NAME
       - JELLYSEERR_API_KEY=$JELLYSEERR_API_KEY
       - LOCATION=$LOCATION
       - DOMAIN_NAME=$DOMAIN_NAME
+      - PIHOLE_PASSWORD=$PIHOLE_PASSWORD
     labels:
       traefik.enable: true
       traefik.http.routers.glance-rtr.entrypoints: websecure

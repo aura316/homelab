@@ -27,7 +27,7 @@
           servers:
             - type: remote
               name: Main server
-              url: http://${HOSTNAME}:27973/
+              url: http://${LOCAL_NAME}:27973/
         - type: to-do
         - type: group
           widgets:
@@ -52,50 +52,49 @@
               title: Internal Services
               sites:
                 - title: Jellyfin
-                  url: http://${HOSTNAME}:8096/
+                  url: http://${LOCAL_NAME}:8096/
                   icon: di:jellyfin
                 - title: Jellyseerr
-                  url: http://${HOSTNAME}:5055/
+                  url: http://${LOCAL_NAME}:5055/
                   icon: di:jellyseerr
                 - title: qBittorrent
-                  url: http://${HOSTNAME}:8090/
+                  url: http://${LOCAL_NAME}:8090/
                   icon: di:qbittorrent
                 - title: Radarr - Anime
-                  url: http://${HOSTNAME}:7879/
+                  url: http://${LOCAL_NAME}:7879/
                   icon: di:radarr
                 - title: Sonarr - Anime
-                  url: http://${HOSTNAME}:8989/
+                  url: http://${LOCAL_NAME}:8989/
                   icon: di:sonarr
                 - title: Radarr
-                  url: http://${HOSTNAME}:7878/
+                  url: http://${LOCAL_NAME}:7878/
                   icon: di:radarr
                 - title: Sonarr - TV
-                  url: http://${HOSTNAME}:8990/
+                  url: http://${LOCAL_NAME}:8990/
                   icon: di:sonarr
                 - title: Prowlarr
-                  url: http://${HOSTNAME}:9696/
+                  url: http://${LOCAL_NAME}:9696/
                   icon: di:prowlarr
                 - title: Bazarr
-                  url: http://${HOSTNAME}:6767/
+                  url: http://${LOCAL_NAME}:6767/
                   icon: di:bazarr
                 - title: Huntarr
-                  url: http://${HOSTNAME}:9705/
+                  url: http://${LOCAL_NAME}:9705/
                   icon: di:huntarr.png
                 - title: Cleanuparr
-                  url: http://${HOSTNAME}:11011/
+                  url: http://${LOCAL_NAME}:11011/
                   icon: di:cleanuperr
                 - title: WebConsole
-                  url: http://${HOSTNAME}:9090/
+                  url: http://${LOCAL_NAME}:9090/
                   icon: di:fedora
                 - title: Stirling PDF
-                  url: http://${HOSTNAME}:8181/
+                  url: http://${LOCAL_NAME}:8181/
                   icon: di:stirling-pdf
                 - title: Homarr
-                  url: http://${HOSTNAME}:7575/
+                  url: http://${LOCAL_NAME}:7575/
                   icon: di:homarr
             - type: docker-containers
               hide-by-default: false
-
     - size: small
       widgets:
         - $include: custom-apis/jellyseerr-requests.yml

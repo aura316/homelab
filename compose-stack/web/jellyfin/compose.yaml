@@ -6,6 +6,7 @@ services:
       - $DOCKER_DIR/jellyfin/config:/config
       - $DOCKER_DIR/jellyfin/cache:/cache
       - $MEDIA_DIR/anime:$MEDIA_DIR/anime
+      - $MEDIA_DIR/anime-movies:$MEDIA_DIR/anime-movies
       - $MEDIA_DIR/movies:$MEDIA_DIR/movies
       - $MEDIA_DIR/tvshows:$MEDIA_DIR/tvshows
       - /dev/shm:/data/transcode # Offload transcoding to RAM if there's enough RAM

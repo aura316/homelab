@@ -4,3 +4,9 @@
     name: "{{ user.name }}"
     comment: "{{ user.comment }}"
     uid: "{{ user.uid }}"
+
+- name: Add users to group
+  ansible.builtin.user:
+    name: "{{ user.name }}"
+    groups: render
+    append: true

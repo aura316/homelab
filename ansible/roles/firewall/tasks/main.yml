@@ -13,7 +13,7 @@
     - name: Allow other ports
       community.general.ufw:
         rule: allow
-        proto: "{{item.proto}}"
+        proto: "{{ item.proto }}"
         port: "{{ item.port }}"
       loop:
         - { proto: tcp, port: 80 }
@@ -25,11 +25,14 @@
         - { proto: udp, port: 123 }
         - { proto: udp, port: 546:547 }
 
-- name: Allow trafic from docker
+- name: Allow trafic from local network
   community.general.ufw:
     rule: allow
-    from: 172.17.0.0/16
+    from: "{{ item }}"
     proto: tcp
+  loop:
+    - 192.168.0.0/16 # default home network
+    - 172.20.0.0/16 # docker compose default network subnet
 
 - name: Enable UFW
   community.general.ufw:
