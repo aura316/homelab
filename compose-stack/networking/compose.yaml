@@ -1,3 +1,0 @@
-include:
-  - pihole/compose.yaml
-  - traefik3/compose.yaml

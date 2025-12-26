@@ -15,14 +15,3 @@ services:
       - $DOCKER_DIR/stirlingpdf/logs:/logs/
       - $DOCKER_DIR/stirlingpdf/pipeline:/pipeline/
     restart: unless-stopped
-    networks:
-      - traefik-proxy
-    labels:
-      traefik.enable: true
-      traefik.http.routers.stirling-pdf-rtr.entrypoints: websecure
-      traefik.http.routers.stirling-pdf-rtr.rule: Host(`stirling.$DOMAIN_NAME`)
-      # Middlewares
-      traefik.http.routers.stirling-pdf-rtr.middlewares: authelia@docker
-      # Service
-      traefik.http.routers.stirling-pdf-rtr.service: stirling-pdf-svc
-      traefik.http.services.stirling-pdf-svc.loadbalancer.server.port: 8080

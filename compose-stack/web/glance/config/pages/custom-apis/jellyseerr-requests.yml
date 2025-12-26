@@ -1,6 +1,6 @@
 - type: custom-api
   title: Jellyseerr requests
-  url: http://${LOCAL_NAME}:5055/api/v1/request/count
+  url: http://${ADDRESS}:5055/api/v1/request/count
   headers:
     x-api-key: ${JELLYSEERR_API_KEY}
     Accept: application/json

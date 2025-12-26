@@ -1,0 +1,10 @@
+services:
+  foundry:
+    build:
+      context: .
+      args:
+        - DL_URL=$FOUNDRY_DL_URL
+    ports:
+      - "30000:30000"
+    volumes:
+      - $DOCKER_DIR/foundry:/foundrydata

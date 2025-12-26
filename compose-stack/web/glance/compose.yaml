@@ -3,32 +3,19 @@ services:
     container_name: glance
     image: glanceapp/glance
     restart: unless-stopped
-    networks:
-      - traefik-proxy
     volumes:
       # Optionally, also mount docker socket if you want to use the docker containers widget
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./config:/app/config
-      # - ./assets:/app/assets # Assets for custom CSS
       - /etc/localtime:/etc/localtime:ro
     ports:
       - 8080:8080
     environment:
       - TZ=$TZ
-      - LOCAL_NAME=$LOCAL_NAME
+      - ADDRESS=$ADDRESS
+      - TAILNET=$TAILNET
       - JELLYSEERR_API_KEY=$JELLYSEERR_API_KEY
       - LOCATION=$LOCATION
-      - DOMAIN_NAME=$DOMAIN_NAME
-      - PIHOLE_PASSWORD=$PIHOLE_PASSWORD
-    labels:
-      traefik.enable: true
-      traefik.http.routers.glance-rtr.entrypoints: websecure
-      traefik.http.routers.glance-rtr.rule: Host(`$DOMAIN_NAME`) || Host(`www.$DOMAIN_NAME`)
-      # Middlewares
-      traefik.http.routers.glance-rtr.middlewares: authelia@docker
-      # Service
-      traefik.http.routers.glance-rtr.service: glance-svc
-      traefik.http.services.glance-svc.loadbalancer.server.port: 8080
 
   # Glance agent for resource monitoring
   glance-agent:

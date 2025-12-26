@@ -27,72 +27,57 @@
           servers:
             - type: remote
               name: Main server
-              url: http://${LOCAL_NAME}:27973/
+              url: http://${ADDRESS}:27973/
         - type: to-do
         - type: group
           widgets:
             - type: monitor
               cache: 1m
-              title: External Services
+              title: Services
               sites:
                 - title: Jellyfin
-                  url: https://jellyfin.${DOMAIN_NAME}/
+                  url: https://jellyfin.${TAILNET}/
                   icon: di:jellyfin
                 - title: Jellyseerr
-                  url: https://jellyseerr.${DOMAIN_NAME}/
+                  url: https://jellyseerr.${TAILNET}/
                   icon: di:jellyseerr
-                - title: Traefik
-                  url: https://traefik.${DOMAIN_NAME}/
-                  icon: di:traefik
-                # - title: Stirling PDF
-                #   url: https://stirling.${DOMAIN_NAME}/
-                #   icon: di:stirling-pdf
             - type: monitor
               cache: 1m
-              title: Internal Services
+              title: Port connections
               sites:
                 - title: Jellyfin
-                  url: http://${LOCAL_NAME}:8096/
+                  url: http://${ADDRESS}:8096/
                   icon: di:jellyfin
                 - title: Jellyseerr
-                  url: http://${LOCAL_NAME}:5055/
+                  url: http://${ADDRESS}:5055/
                   icon: di:jellyseerr
                 - title: qBittorrent
-                  url: http://${LOCAL_NAME}:8090/
+                  url: http://${ADDRESS}:8090/
                   icon: di:qbittorrent
                 - title: Radarr - Anime
-                  url: http://${LOCAL_NAME}:7879/
+                  url: http://${ADDRESS}:7879/
+                  icon: di:radarr
+                - title: Radarr
+                  url: http://${ADDRESS}:7878/
                   icon: di:radarr
                 - title: Sonarr - Anime
-                  url: http://${LOCAL_NAME}:8989/
+                  url: http://${ADDRESS}:8989/
                   icon: di:sonarr
-                - title: Radarr
-                  url: http://${LOCAL_NAME}:7878/
-                  icon: di:radarr
                 - title: Sonarr - TV
-                  url: http://${LOCAL_NAME}:8990/
+                  url: http://${ADDRESS}:8990/
                   icon: di:sonarr
                 - title: Prowlarr
-                  url: http://${LOCAL_NAME}:9696/
+                  url: http://${ADDRESS}:9696/
                   icon: di:prowlarr
                 - title: Bazarr
-                  url: http://${LOCAL_NAME}:6767/
+                  url: http://${ADDRESS}:6767/
                   icon: di:bazarr
-                - title: Huntarr
-                  url: http://${LOCAL_NAME}:9705/
-                  icon: di:huntarr.png
                 - title: Cleanuparr
-                  url: http://${LOCAL_NAME}:11011/
+                  url: http://${ADDRESS}:11011/
                   icon: di:cleanuperr
-                - title: WebConsole
-                  url: http://${LOCAL_NAME}:9090/
-                  icon: di:fedora
                 - title: Stirling PDF
-                  url: http://${LOCAL_NAME}:8181/
+                  url: http://${ADDRESS}:8181/
                   icon: di:stirling-pdf
-                - title: Homarr
-                  url: http://${LOCAL_NAME}:7575/
-                  icon: di:homarr
             - type: docker-containers
               hide-by-default: false
     - size: small

@@ -14,14 +14,14 @@ services:
       - CRON_SCHEDULE=@daily
       - RECYCLARR_CREATE_CONFIG=true
       # ARR integration settings
-      - ANIME_RADARR_URL=http://$LOCAL_NAME:7879
+      - ANIME_RADARR_URL=https://$ADDRESS:7879
       - ANIME_RADARR_API=$ANIME_RADARR_API
 
-      - ANIME_SONARR_URL=http://$LOCAL_NAME:8989
+      - ANIME_SONARR_URL=https://$ADDRESS:8989
       - ANIME_SONARR_API=$ANIME_SONARR_API
 
-      - TV_RADARR_URL=http://$LOCAL_NAME:7878
+      - TV_RADARR_URL=https://$ADDRESS:7878
       - TV_RADARR_API=$TV_RADARR_API
 
-      - TV_SONARR_URL=http://$LOCAL_NAME:8990
+      - TV_SONARR_URL=https://$ADDRESS:8990
       - TV_SONARR_API=$TV_SONARR_API

@@ -10,14 +10,3 @@ services:
     volumes:
       - $DOCKER_DIR/jellyseerr:/app/config
     restart: unless-stopped
-    networks:
-      - traefik-proxy
-    labels:
-      traefik.enable: true
-      traefik.http.routers.jellyseerr-rtr.entrypoints: websecure
-      traefik.http.routers.jellyseerr-rtr.rule: Host(`jellyseerr.$DOMAIN_NAME`)
-      # Middlewares
-      traefik.http.routers.jellyseerr-rtr.middlewares: authelia@docker
-      # Service
-      traefik.http.routers.jellyseerr-rtr.service: jellyseerr-svc
-      traefik.http.services.jellyseerr-svc.loadbalancer.server.port: 5055
