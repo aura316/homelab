@@ -8,6 +8,6 @@
   roles:
     - packages
     - users
-    - firewall
+    # - firewall
     - docker
-    - homelab
+    - directories
