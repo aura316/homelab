@@ -3,5 +3,5 @@ include:
   - jellyfin/compose.yaml
   - jellyseerr/compose.yaml
   - filebrowser/compose.yaml
-  - foundry/compose.yaml
+  # - foundry/compose.yaml
   - stirlingpdf/compose.yaml

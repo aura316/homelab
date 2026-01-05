@@ -5,10 +5,10 @@ services:
     volumes:
       - $DOCKER_DIR/jellyfin/config:/config
       - $DOCKER_DIR/jellyfin/cache:/cache
-      - $MEDIA_DIR/anime:$MEDIA_DIR/anime
-      - $MEDIA_DIR/anime-movies:$MEDIA_DIR/anime-movies
       - $MEDIA_DIR/movies:$MEDIA_DIR/movies
-      - $MEDIA_DIR/tvshows:$MEDIA_DIR/tvshows
+      - $MEDIA_DIR/movies-anime:$MEDIA_DIR/movies-anime
+      - $MEDIA_DIR/shows:$MEDIA_DIR/shows
+      - $MEDIA_DIR/shows-anime:$MEDIA_DIR/shows-anime
       - /dev/shm:/data/transcode # Offload transcoding to RAM if there's enough RAM
     restart: 'unless-stopped'
     devices:

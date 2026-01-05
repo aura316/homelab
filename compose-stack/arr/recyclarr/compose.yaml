@@ -8,20 +8,21 @@ services:
       # Docker creates folders as root which is really annoying
       - ./configs/:/config/configs
       - $DOCKER_DIR/recyclarr:/config
-    # URLs defined from local name, still must respect the exposed docker ports from the services
     environment:
+      - PUID=$PUID
+      - PGID=$PGID
       - TZ=$TZ
       - CRON_SCHEDULE=@daily
       - RECYCLARR_CREATE_CONFIG=true
       # ARR integration settings
-      - ANIME_RADARR_URL=https://$ADDRESS:7879
-      - ANIME_RADARR_API=$ANIME_RADARR_API
-
-      - ANIME_SONARR_URL=https://$ADDRESS:8989
-      - ANIME_SONARR_API=$ANIME_SONARR_API
-
-      - TV_RADARR_URL=https://$ADDRESS:7878
+      - TV_RADARR_URL=http://radarr:7878
       - TV_RADARR_API=$TV_RADARR_API
 
-      - TV_SONARR_URL=https://$ADDRESS:8990
+      - ANIME_RADARR_URL=http://radarr-anime:7878
+      - ANIME_RADARR_API=$ANIME_RADARR_API
+
+      - TV_SONARR_URL=http://sonarr:8989
       - TV_SONARR_API=$TV_SONARR_API
+
+      - ANIME_SONARR_URL=http://sonarr-anime:8989
+      - ANIME_SONARR_API=$ANIME_SONARR_API

@@ -31,9 +31,9 @@
     group: "{{ user.name }}"
     state: directory
   loop:
-    - anime
-    - anime-movies
-    - tvshows
+    - shows-anime
+    - movies-anime
+    - shows
     - movies
     - prowlarr
 
@@ -45,9 +45,9 @@
     group: "{{ user.name }}"
     state: directory
   loop:
-    - anime
-    - anime-movies
-    - tvshows
+    - shows-anime
+    - movies-anime
+    - shows
     - movies
     - prowlarr
 
@@ -59,8 +59,8 @@
     group: "{{ user.name }}"
     state: directory
   loop:
-    - anime
-    - anime-movies
-    - tvshows
+    - shows-anime
+    - movies-anime
+    - shows
     - movies
     - prowlarr

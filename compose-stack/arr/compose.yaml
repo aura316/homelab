@@ -3,7 +3,5 @@ include:
   - cleanuparr/compose.yaml
   - prowlarr/compose.yaml
   - radarr/compose.yaml
-  - radarr-anime/compose.yaml
   - recyclarr/compose.yaml
-  - sonarr-anime/compose.yaml
-  - sonarr-tv/compose.yaml
+  - sonarr/compose.yaml
