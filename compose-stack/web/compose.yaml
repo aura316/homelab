@@ -4,4 +4,4 @@ include:
   - jellyseerr/compose.yaml
   - filebrowser/compose.yaml
   # - foundry/compose.yaml
-  - stirlingpdf/compose.yaml
+  # - stirlingpdf/compose.yaml

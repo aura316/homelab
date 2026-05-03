@@ -1,3 +1,5 @@
+# Setup fail2ban with this if using funnel
+# https://filebrowser.org/deployment.html?h=log#filter-configuration
 services:
   filebrowser:
     image: filebrowser/filebrowser:latest

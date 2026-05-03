@@ -25,22 +25,22 @@
       widgets:
         - type: server-stats
           servers:
-            - type: remote
-              name: Main server
-              url: http://${ADDRESS}:27973/
+            - type: local
+              name: "Node01"
+              hide-mountpoints-by-default: true
+              mountpoints:
+                "${MEDIA_DIR}":
+                  hide: false
+                  name: "Media"
+                "${FILESERVER_DIR}":
+                  hide: false
+                  name: "File Server"
+                "/":
+                  hide: false
+                  name: "Root"
         - type: to-do
         - type: group
           widgets:
-            - type: monitor
-              cache: 1m
-              title: Services
-              sites:
-                - title: Jellyfin
-                  url: https://jellyfin.${TAILNET}/
-                  icon: di:jellyfin
-                - title: Jellyseerr
-                  url: https://jellyseerr.${TAILNET}/
-                  icon: di:jellyseerr
             - type: monitor
               cache: 1m
               title: Port connections
@@ -54,17 +54,17 @@
                 - title: qBittorrent
                   url: http://${ADDRESS}:8090/
                   icon: di:qbittorrent
-                - title: Radarr - Anime
-                  url: http://${ADDRESS}:7879/
-                  icon: di:radarr
                 - title: Radarr
                   url: http://${ADDRESS}:7878/
                   icon: di:radarr
+                - title: Radarr - Anime
+                  url: http://${ADDRESS}:7879/
+                  icon: di:radarr
+                - title: Sonarr
+                  url: http://${ADDRESS}:8988/
+                  icon: di:sonarr
                 - title: Sonarr - Anime
                   url: http://${ADDRESS}:8989/
-                  icon: di:sonarr
-                - title: Sonarr - TV
-                  url: http://${ADDRESS}:8990/
                   icon: di:sonarr
                 - title: Prowlarr
                   url: http://${ADDRESS}:9696/

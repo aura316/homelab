@@ -8,6 +8,8 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./config:/app/config
       - /etc/localtime:/etc/localtime:ro
+      - $MEDIA_DIR:$MEDIA_DIR
+      - $FILESERVER_DIR:$FILESERVER_DIR
     ports:
       - 8080:8080
     environment:
@@ -16,13 +18,5 @@ services:
       - TAILNET=$TAILNET
       - JELLYSEERR_API_KEY=$JELLYSEERR_API_KEY
       - LOCATION=$LOCATION
-
-  # Glance agent for resource monitoring
-  glance-agent:
-    container_name: glance-agent
-    image: glanceapp/agent
-    volumes:
-      # Add your mount points below in the format host_path:container_path with :ro suffix for read-only
-      - /storage:/storage:ro
-    ports:
-      - 27973:27973
+      - MEDIA_DIR=$MEDIA_DIR
+      - FILESERVER_DIR=$FILESERVER_DIR
