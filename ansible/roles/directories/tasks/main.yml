@@ -19,9 +19,8 @@
   loop:
     - jellyfin/config
     - jellyfin/cache
-    - jellyseerr
+    - seerr
     - recyclarr
-    - huntarr
 
 
 - name: Create torrent directories
@@ -41,6 +40,20 @@
 - name: Create usenet directories
   ansible.builtin.file:
     path: /media-server/usenet/complete/{{ item }}
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    state: directory
+  loop:
+    - shows-anime
+    - movies-anime
+    - shows
+    - movies
+    - prowlarr
+
+    
+- name: Create usenet incomplete directories
+  ansible.builtin.file:
+    path: /media-server/usenet/incomplete/{{ item }}
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
     state: directory

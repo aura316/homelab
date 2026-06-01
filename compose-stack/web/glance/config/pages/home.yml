@@ -51,9 +51,6 @@
                 - title: Jellyseerr
                   url: http://${ADDRESS}:5055/
                   icon: di:jellyseerr
-                - title: qBittorrent
-                  url: http://${ADDRESS}:8090/
-                  icon: di:qbittorrent
                 - title: Radarr
                   url: http://${ADDRESS}:7878/
                   icon: di:radarr
@@ -72,12 +69,9 @@
                 - title: Bazarr
                   url: http://${ADDRESS}:6767/
                   icon: di:bazarr
-                - title: Cleanuparr
-                  url: http://${ADDRESS}:11011/
-                  icon: di:cleanuperr
-                - title: Stirling PDF
-                  url: http://${ADDRESS}:8181/
-                  icon: di:stirling-pdf
+                - title: NZBGet
+                  url: http://${ADDRESS}:6789/
+                  icon: di:nzbget
             - type: docker-containers
               hide-by-default: false
     - size: small

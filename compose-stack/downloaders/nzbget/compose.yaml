@@ -8,8 +8,6 @@ services:
       - PUID=$PUID
       - PGID=$PGID
       - TZ=$TZ
-      - NZBGET_USER=$USERNAME #optional
-      - NZBGET_PASS=pass #optional
     volumes:
       - $DOCKER_DIR/nzbget:/config
       - $USENET_DIR:$USENET_DIR

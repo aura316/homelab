@@ -1,7 +1,7 @@
 include:
   - glance/compose.yaml
   - jellyfin/compose.yaml
-  - jellyseerr/compose.yaml
+  - seerr/compose.yaml
   - filebrowser/compose.yaml
   # - foundry/compose.yaml
   # - stirlingpdf/compose.yaml
